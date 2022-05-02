@@ -57,3 +57,17 @@ import {
 
   console.log(buffer);
 })();
+
+
+(async function staticMemory() {
+  const wasm = await instantiateStreaming("./memory/static-memory.wasm");
+
+  log("static memory - module exports", getModuleExports(wasm.module));
+  log("static memory - module imports", getModuleImports(wasm.module));
+
+  const memory = wasm.instance.exports.memory
+  
+  log("static memory - int [3] = {1, 2, 3}", new Uint32Array(memory.buffer, 0, 3));
+  log("static memory - int [6] = {'A', 'B', 'C', 'D'}", (new TextDecoder().decode((new Uint8Array(memory.buffer, 12, 4)))));
+  log("static memory - int [2] = {7, 9}", new Uint32Array(memory.buffer, 16 , 2));
+})();
