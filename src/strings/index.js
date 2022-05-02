@@ -32,4 +32,27 @@ import {
   log("strings - after reverse buffer", deocder.decode(buffer));
 })();
 
-(async function strings() {})();
+(async function strings() {
+  const memory = new WebAssembly.Memory({ initial: 1 });
+
+  const imports = {
+    env: {
+      mem: memory,
+      logString(offset, len) {
+        const decoder = new TextDecoder("utf8");
+        const buffer = new Uint8Array(memory.buffer, offset, len);
+        log("strings - logString", decoder.decode(buffer));
+      },
+    },
+  };
+
+  const wasm = await instantiateStreaming(
+    "./strings/strings-from.wasm",
+    imports
+  );
+
+  log("strings - module exports", getModuleExports(wasm.module));
+  log("strings - module imports", getModuleImports(wasm.module));
+
+  wasm.instance.exports.logString();
+})();
