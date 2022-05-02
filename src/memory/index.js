@@ -30,3 +30,30 @@ import {
 
   log("memory - sum buffer entries", wasm.instance.exports.sum(10));
 })();
+
+(async function sharedMemory() {
+  const memory = new WebAssembly.Memory({ initial: 1, maximum: 2 });
+
+  const imports = {
+    env: {
+      mem: memory,
+    },
+  };
+
+  const buffer = new Uint8Array(memory.buffer);
+
+  const wasm = await instantiateStreaming("./memory/math.wasm", imports);
+
+  const wasm2 = new WebAssembly.Instance(wasm.module, imports);
+
+  log("memory - module exports", getModuleExports(wasm.module));
+  log("memory - module imports", getModuleImports(wasm.module));
+
+  log("memory - sum shared memory", wasm.instance.exports.add(0, 1));
+
+  log("memory - sum shared memory", wasm2.exports.add(0, 4));
+
+  log("memory - sum shared memory", wasm2.exports.add(0, 4));
+
+  console.log(buffer);
+})();
