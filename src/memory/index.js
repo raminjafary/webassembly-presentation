@@ -4,6 +4,7 @@ import {
   getModuleExports,
   getModuleImports,
 } from "../utils/index.js";
+import { Malloc } from "../utils/malloc.js";
 
 (async function memory() {
   const memory = new WebAssembly.Memory({ initial: 1, maximum: 2 });
@@ -54,20 +55,32 @@ import {
   log("memory - sum shared memory", wasm2.exports.add(0, 4));
 
   log("memory - sum shared memory", wasm2.exports.add(0, 4));
-
-  console.log(buffer);
 })();
 
+(async function heapMemory() {
+  const pageSize = 64 * 1024;
 
-(async function staticMemory() {
-  const wasm = await instantiateStreaming("./memory/static-memory.wasm");
+  const newSize = 64 * 2 * 1024;
 
-  log("static memory - module exports", getModuleExports(wasm.module));
-  log("static memory - module imports", getModuleImports(wasm.module));
+  const memory = new WebAssembly.Memory({ initial: 1 });
 
-  const memory = wasm.instance.exports.memory
-  
-  log("static memory - int [3] = {1, 2, 3}", new Uint32Array(memory.buffer, 0, 3));
-  log("static memory - int [6] = {'A', 'B', 'C', 'D'}", (new TextDecoder().decode((new Uint8Array(memory.buffer, 12, 4)))));
-  log("static memory - int [2] = {7, 9}", new Uint32Array(memory.buffer, 16 , 2));
+  const currentSize = memory.buffer.byteLength;
+
+  const malloc = new Malloc(memory.buffer);
+
+  const i32 = malloc.allocUint32(3);
+  i32.set([1, 2, 3]);
+
+  const i8 = malloc.allocUint8(4);
+  new TextEncoder().encodeInto("ABCD", i8);
+
+  log("heap memory - i32", i32);
+  log("heap memory - i8", new TextDecoder().decode(i8));
+
+  // wasm.instance.exports.add(i32.byteOffset, i32.length)
+
+  if (currentSize < newSize) {
+    const pages = Math.ceil(newSize - currentSize) / pageSize;
+    memory.grow(pages);
+  }
 })();
