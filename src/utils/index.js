@@ -59,6 +59,14 @@ export async function instantiateStreamingAndCreateInstanceLater(
   return await WebAssembly.instantiate(wasm.module, imports);
 }
 
+export function getModuleExports(module) {
+  return WebAssembly.Module.exports(module);
+}
+
+export function getModuleImports(module) {
+  return WebAssembly.Module.imports(module);
+}
+
 export function log(str, arg) {
   console.log(
     `%c${str}`,
