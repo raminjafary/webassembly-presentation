@@ -1,7 +1,25 @@
-# webassembly-presentation
-
 # Talk on WebAssembly
 
+
+## Work with WebAssembly directly
+
+`WABT` is the WebAssembly Binary Toolkit intended for use in toolchains or other systems that want to manipulate WebAssembly files.
+
+To translate from WebAssembly text format (`.wat`) to the WebAssembly binary format (`.wasm)` you can use `wat2wasm`.
+
+```bash
+$ wat2wasm test.wat -o text.wasm
+```
+
+You can use `wasm2wat` to do the inverse of `wat2wasm`, translating from the binary format back to the text format.
+
+```bash
+$ wasm2wat test.wasm -o text.wat
+```
+
+See [WABT](https://github.com/webassembly/wabt) to find out about other tools and installation guide.
+
+## C/C++ to WebAssembly
 To compile `C/C++` code into Wasm, you can either install `Emscripten` or simply use the [official Docker image](https://hub.docker.com/r/emscripten/emsdk):
 
 ### Using Emscripten’s Module Object
@@ -33,9 +51,10 @@ $ docker run --rm -v $(pwd):/src emscripten/emsdk emcc -Os -sSTANDALONE_WASM=1 -
 
 Alternatively, you can compile `C/C++` with [LLVM](https://llvm.org/) instead of `Emscripten`. See [LLVM installation](https://apt.llvm.org/) guide.
 
-**Resources**:
 
-[standalone WebAssembly binaries using Emscripten](https://v8.dev/blog/emscripten-standalone-wasm)
+### Resources
+
+[Standalone WebAssembly binaries using Emscripten](https://v8.dev/blog/emscripten-standalone-wasm)
 
 [Compiling C to WebAssembly without Emscripten](https://surma.dev/things/c-to-webassembly/)
 
@@ -46,3 +65,9 @@ Alternatively, you can compile `C/C++` with [LLVM](https://llvm.org/) instead of
 [Compiling C to WebAssembly and Running It - without Emscripten](https://depth-first.com/articles/2019/10/16/compiling-c-to-webassembly-and-running-it-without-emscripten/)
 
 [Shrinking WebAssembly and JavaScript code sizes in Emscripten](https://hacks.mozilla.org/2018/01/shrinking-webassembly-and-javascript-code-sizes-in-emscripten/)
+
+[Emscripten](https://github.com/emscripten-core/emscripten)
+
+[WABT: The WebAssembly Binary Toolk](https://github.com/webassembly/wabt)
+
+[The LLVM Compiler Infrastructure](https://github.com/llvm/llvm-project)
