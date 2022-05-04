@@ -52,6 +52,15 @@ $ docker run --rm -v $(pwd):/src emscripten/emsdk emcc -Os -sSTANDALONE_WASM=1 -
 Alternatively, you can compile `C/C++` with [LLVM](https://llvm.org/) instead of `Emscripten`. See [LLVM installation](https://apt.llvm.org/) guide.
 
 
+## Rust
+
+You can use `wasm-pack` to compile code to WebAssembly as well as produce the right packaging for use in the browser.
+
+```bash
+$ cargo install wasm-pack
+```
+
+
 ### Resources
 
 [Standalone WebAssembly binaries using Emscripten](https://v8.dev/blog/emscripten-standalone-wasm)
@@ -65,6 +74,8 @@ Alternatively, you can compile `C/C++` with [LLVM](https://llvm.org/) instead of
 [Compiling C to WebAssembly and Running It - without Emscripten](https://depth-first.com/articles/2019/10/16/compiling-c-to-webassembly-and-running-it-without-emscripten/)
 
 [Shrinking WebAssembly and JavaScript code sizes in Emscripten](https://hacks.mozilla.org/2018/01/shrinking-webassembly-and-javascript-code-sizes-in-emscripten/)
+
+[Compiling from Rust to WebAssembly](https://developer.mozilla.org/en-US/docs/WebAssembly/Rust_to_wasm)
 
 [Emscripten](https://github.com/emscripten-core/emscripten)
 
