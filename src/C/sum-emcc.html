@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="./sum-emcc-module.js"></script>
+  <script>
+    Module.onRuntimeInitialized = () => {
+      const sum = Module.cwrap("sum", "number", ["number", "number"]);
+      console.log(sum(5, 5));
+    };
+  </script>
+  <script>
+      // const result = Module.ccall(
+      //         'sum',  // name of C function
+      //         null,  // return type
+      //         null,  // argument types
+      //         null  // arguments
+      //     );
+      //
+  </script>
+</body>
+
+</html>
