@@ -1,6 +1,5 @@
 # Talk on WebAssembly
 
-
 ## Work with WebAssembly directly
 
 `WABT` is the WebAssembly Binary Toolkit intended for use in toolchains or other systems that want to manipulate WebAssembly files.
@@ -19,7 +18,19 @@ $ wasm2wat test.wasm -o text.wat
 
 See [WABT](https://github.com/webassembly/wabt) to find out about other tools and installation guide.
 
+## WASI
+
+[WebAssembly System Interface](https://wasi.dev/) (WASI) is a family of APIs designed as a new standard engine-independent non-web system-oriented interface for WebAssembly. It enables working with files, networking, and other operating system features directly from Wasm.
+
+As WASI is an experimental feature, the `--experimental-wasi-unstable-preview1` CLI argument is needed for this example to run:
+
+```bash
+$ node --experimental-wasi-unstable-preview1 index.js
+hello
+```
+
 ## C/C++ to WebAssembly
+
 To compile `C/C++` code into Wasm, you can either install `Emscripten` or simply use the [official Docker image](https://hub.docker.com/r/emscripten/emsdk):
 
 ### Using Emscripten’s Module Object
@@ -51,7 +62,6 @@ $ docker run --rm -v $(pwd):/src emscripten/emsdk emcc -Os -sSTANDALONE_WASM=1 -
 
 Alternatively, you can compile `C/C++` with [LLVM](https://llvm.org/) instead of `Emscripten`. See [LLVM installation](https://apt.llvm.org/) guide.
 
-
 ## Rust
 
 You can use `wasm-pack` to compile code to WebAssembly as well as produce the right packaging for use in the browser.
@@ -59,7 +69,6 @@ You can use `wasm-pack` to compile code to WebAssembly as well as produce the ri
 ```bash
 $ cargo install wasm-pack
 ```
-
 
 ### Resources
 
