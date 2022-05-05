@@ -31,7 +31,8 @@ hello
 
 ## C/C++ to WebAssembly
 
-To compile `C/C++` code into Wasm, you can either install `Emscripten` or simply use the [official Docker image](https://hub.docker.com/r/emscripten/emsdk):
+To compile `C/C++` code into Wasm, you can either install `Emscripten` or simply use the [official Docker image](https://hub.docker.com/r/emscripten/emsdk).
+Emscripten complies not only C/C++ code, but any LLVM-based language, like Scala, Crystal, Haskell, Julia, Swift, or Ruby.
 
 ### Using Emscripten’s Module Object
 
